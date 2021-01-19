@@ -1,18 +1,12 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("hello")
 public class HelloController {
-
-    //Handles requests at /hello
-//    @GetMapping("hello")
-//    @ResponseBody
-//    public String hello() {
-//        return "Hello, Spring!";
-//    }
 
     //Handles requests at /hello/goodbye
     @GetMapping("goodbye")
@@ -23,16 +17,18 @@ public class HelloController {
 
     //Handles request of the form /hello?name=LaunchCode
     @RequestMapping(method={RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello " + name + "!";
+    public String hello(@RequestParam String name, Model model) {
+        String greeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", greeting);
+        return "hello";
     }
 
     //Handles requests of the form /hello/LaunchCode
     @GetMapping("{name}")
-    @ResponseBody
-    public String helloWithPathParam(@PathVariable String name) {
-        return "Hello " + name + "!";
+    public String helloAgain(@PathVariable String name, Model model) {
+        String greeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", greeting);
+        return "hello";
     }
 
     //Lives at /hello/form
